@@ -8,7 +8,7 @@
 }
 
 .main_container {
-  background-color: green;
+  background-color: black;
   width: 100%;
   min-height: 100vh;
   padding: 1rem;
@@ -27,6 +27,7 @@ header {
   justify-content: space-between;
   align-items: center;
 }
+
 .logo {
   width: 3rem;
   height: 3rem;
@@ -35,10 +36,11 @@ header {
 }
 
 .btn {
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   color: black;
   border-radius: 6px;
   background-color: white;
+  cursor: pointer;
 }
 
 .content {
@@ -66,7 +68,6 @@ h1 {
 .secret_number {
   z-index: 1;
   display: inline;
-  width: fit-content;
   padding: 2rem 2.5rem;
   font-size: 2.25rem;
   line-height: 2.5rem;
@@ -105,7 +106,7 @@ input {
   padding: 1rem;
   border: 2px solid white;
   border-radius: 6px;
-
+  color: white;
 }
 
 .info_wrapper {

@@ -13,30 +13,33 @@
       <header>
           <img class="logo" src="https://img.freepik.com/premium-vector/owl-esport-logo_96786-4.jpg" alt="">
           <div>
-            <button class="btn">Reset</button>
+            <button class="btn reset">Again</button>
           </div>
       </header>
       <main class="content">
         <h1>Guess My Number!</h1>
         <div class="guess_wrapper">
-          <p class="secret_number">10</p>
+          <p class="secret_number">?</p>
           <p class="line"></p>
         </div>
         <div class="lower_part">
           <div class="input_wrapper">
-            <input type="number" id="">
-            <button class="btn">Check</button>
+            <input class="guess" type="number" id="">
+            <button  class="btn check">Check</button>
+            <button class="btn find">Find by AI</button>
           </div>
           <div class="info_wrapper">
-            <p>😍 Correct Number</p>
+            <p class="message">Start guessing...</p>
             <div>
-              <p>✅ Your score: <span>16</span></p>
-              <p>💯 Highest score: <span>20</span></p>
+              <p>✅ Score: <span class="score">20</span></p>
+              <p>💯 Highest score: <span class="high_score">0</span></p>
             </div>
           </div>
         </div>
       </main>
     </div>
   </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
