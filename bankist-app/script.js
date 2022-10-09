@@ -92,3 +92,17 @@ const displayMovements = function(movements) {
 }
 
 displayMovements(account1.movements);
+
+const eurToUsd = 1.1
+
+// const movementsUSD = movements.map(function(mov) {
+//   return mov * eurToUsd
+// })
+
+const movementsUSD = movements.map(mov => mov * eurToUsd);
+
+const movementsDescription = movements.map((mov, i, arr) => {
+  return `Movement ${i+1}: You ${mov > 0 ? 'deposited' : 'withdrew'} deposited ${Math.abs(mov)}`
+})
+
+console.log(movementsDescription);
