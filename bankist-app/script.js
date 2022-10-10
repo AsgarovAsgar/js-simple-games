@@ -93,6 +93,20 @@ const displayMovements = function(movements) {
 
 displayMovements(account1.movements);
 
+const user = 'Steven Thomas Williams'
+
+const createUserNames = function(accs) {
+  accs.forEach(function(acc) {
+    acc.username = acc.owner.toLowerCase().split(' ').map(name => name.charAt(0)).join('')
+  })
+}
+
+createUserNames(accounts)
+
+console.log(accounts);
+
+
+
 const eurToUsd = 1.1
 
 // const movementsUSD = movements.map(function(mov) {
@@ -105,4 +119,10 @@ const movementsDescription = movements.map((mov, i, arr) => {
   return `Movement ${i+1}: You ${mov > 0 ? 'deposited' : 'withdrew'} deposited ${Math.abs(mov)}`
 })
 
-console.log(movementsDescription);
+// console.log(movementsDescription);
+
+const deposits = movements.filter(mov => mov > 0)
+
+const withdrawals = movements.filter((mov) => mov < 0);
+
+console.log(withdrawals);
