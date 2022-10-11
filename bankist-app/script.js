@@ -93,17 +93,34 @@ const displayMovements = function(movements) {
 
 displayMovements(account1.movements);
 
-const user = 'Steven Thomas Williams'
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = balance + "€";
+};
+calcDisplayBalance(account1.movements);
 
+const calcDisplayMovements = function(movements) {
+  const incomes = movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0)
+  labelSumIn.textContent = incomes + "€";
+
+  const out = movements.filter(mov => mov < 0).reduce((acc, mov) => acc + mov, 0)
+  labelSumOut.textContent = Math.abs(out) + "€";
+
+  const interest = movements.filter(mov => mov > 0).map(mov => mov * 1.2/100).filter((int, i, arr) => int >= 1).reduce((acc, mov) => acc + mov, 0)
+  labelSumInterest.textContent = interest + "€";
+}
+calcDisplayMovements(account1.movements);
+
+const user = 'Steven Thomas Williams'
 const createUserNames = function(accs) {
   accs.forEach(function(acc) {
     acc.username = acc.owner.toLowerCase().split(' ').map(name => name.charAt(0)).join('')
   })
 }
-
 createUserNames(accounts)
 
-console.log(accounts);
+
+// console.log(accounts);
 
 
 
@@ -125,4 +142,48 @@ const deposits = movements.filter(mov => mov > 0)
 
 const withdrawals = movements.filter((mov) => mov < 0);
 
-console.log(withdrawals);
+// REDUCE METHOD
+
+// const balance = movements.reduce(function(acc, cur, i, arr) {
+//   return acc + cur
+// }, 0)
+
+// const balance = movements.reduce((acc, cur) => acc + cur, 0);
+// console.log(balance);
+
+// let bal = 0;
+// for ( const mov of movements) {
+//   bal += mov
+// }
+// console.log(bal)
+
+//maximum value
+
+// const max1 = movements.reduce(function(max, mov) {
+//   console.log(mov);
+//   mov > max ? max = mov : max
+//   return max
+// }, 0)
+
+// console.log(max1);
+
+// const calcAverageHumanAge = function(arr) {
+//   const humanAges = arr.map(dogAge => dogAge <= 2 ? dogAge * 2 : dogAge * 4 + 16)
+
+//   const adultHumanAges = humanAges.filter(humanAge => humanAge >= 18)
+
+//   const averageHumanAge = adultHumanAges.reduce((acc, age) => acc + age, 0) / adultHumanAges.length
+//   return averageHumanAge;
+// }
+
+// const arr1 = [5, 2, 4, 1, 15, 8, 3]
+// const avg1 = calcAverageHumanAge(arr1)
+
+// console.log(avg1);
+
+// CHAINING ALL OF THEM
+
+// const sum = movements.filter(mov => mov > 0).map(mov => mov * 1.1).reduce((acc, mov) => acc + mov, 0)
+
+// console.log(sum);
+
