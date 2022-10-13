@@ -187,3 +187,12 @@ const withdrawals = movements.filter((mov) => mov < 0);
 
 // console.log(sum);
 
+// ---- FIND METHOD ----
+
+const firstWithdrawal = movements.find(mov => mov < 0)
+
+console.log(firstWithdrawal);
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis')
+console.log(account);
+
