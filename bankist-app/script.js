@@ -92,9 +92,12 @@ const displayMovements = function(movements) {
 }
 
 
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+const calcDisplayBalance = function (acc) {
+  const balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
   labelBalance.textContent = balance + "€";
+
+  acc.balance = balance
+  console.log('account: ', acc);
 };
 
 const calcDisplaySummary = function(acc) {
@@ -116,6 +119,17 @@ const createUserNames = function(accs) {
 }
 createUserNames(accounts)
 
+const updateUI = function(acc) {
+  // display movements
+  displayMovements(acc.movements);
+
+  // display balance
+  calcDisplayBalance(acc);
+
+  // display summary
+  calcDisplaySummary(acc);
+}
+
 
 let currentAccount
 btnLogin.addEventListener('click', function(e) {
@@ -135,21 +149,38 @@ btnLogin.addEventListener('click', function(e) {
     inputLoginUsername.value = inputLoginPin.value = ''
     inputLoginPin.blur()
 
-    // display movements
-    displayMovements(currentAccount.movements);
-
-    // display balance
-    calcDisplayBalance(currentAccount.movements);
-
-    // display summary
-    calcDisplaySummary(currentAccount);
-
-    console.log("login");
+    //update UI
+    updateUI(currentAccount);
   }
 })
 
+btnTransfer.addEventListener('click', function(e) {
+  e.preventDefault()
+  const receiverAcc = accounts.find((acc) => acc.username === inputTransferTo.value);
+  const amount = Number(inputTransferAmount.value);
 
-// console.log(accounts);
+  // console.log("transfer", amount, receiverAcc);
+
+  if (
+    amount > 0 &&
+    receiverAcc && 
+    currentAccount.balance >= amount &&
+    receiverAcc?.username !== currentAccount.username
+  ) {
+    console.log("transfer is valid");
+
+    // make transfer
+    currentAccount.movements.push(-amount)
+    receiverAcc.movements.push(amount)
+
+    // clear input fields
+    inputTransferTo.value = inputTransferAmount.value = ''
+    inputTransferAmount.blur()
+
+    //update UI
+    updateUI(currentAccount);
+  }
+})
 
 
 
