@@ -182,6 +182,41 @@ btnTransfer.addEventListener('click', function(e) {
   }
 })
 
+btnLoan.addEventListener('click', function(e) {
+  e.preventDefault()
+  const amount = Number(inputLoanAmount.value)
+
+  if(amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    // add movement
+    currentAccount.movements.push(amount)
+
+    // update UI
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = "";
+  inputLoanAmount.blur();
+
+})
+
+btnClose.addEventListener('click', function(e) {
+  e.preventDefault()
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const index = accounts.findIndex(
+      (acc) => acc.username === currentAccount.username
+    );
+    console.log("click", index)
+
+    accounts.splice(index, 1)
+    containerApp.style.opacity = 0
+  }
+
+  inputCloseUsername.value = inputClosePin.value = 0;
+  inputClosePin.blur();
+})
+
 
 
 const eurToUsd = 1.1
@@ -255,4 +290,47 @@ const withdrawals = movements.filter((mov) => mov < 0);
 
 // const account = accounts.find(acc => acc.owner === 'Jessica Davis')
 // console.log(account);
+
+// ---- INCLUDES ----
+
+// console.log(movements)
+// console.log(movements.includes(-30));
+
+// SOME
+const anyDeposits = movements.some(mov => mov > 0)
+// console.log(anyDeposits);
+
+// EVERY
+// console.log(movements.every(mov => mov > 0));
+// console.log(account4.movements.every((mov) => mov > 0));
+
+
+// FLAT
+// const arr = [[1, 2, 3], [4, 5, 6], 7, 8]
+// console.log(arr.flat());
+
+// const arrDeep = [[[1, 2], 3], [[4, 5], 6], 7, 8];
+// console.log(arrDeep.flat(2));
+
+// const accountMovements = accounts.map(acc => acc.movements)
+// const allMovements = accountMovements.flat()
+
+// console.log(allMovements.reduce((acc, mov) => acc + mov, 0))
+
+
+// Methods CHAINING
+const overallBalance = accounts
+  .map((acc) => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0)
+
+  console.log(overallBalance);
+
+// FLATMAP
+const overallBalance2 = accounts
+  .flatMap((acc) => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(overallBalance2);
+
 
