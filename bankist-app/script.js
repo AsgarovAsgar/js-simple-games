@@ -75,10 +75,12 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
-const displayMovements = function(movements) {
+const displayMovements = function(movements, sort = false) {
   containerMovements.innerHTML = ''
 
-  movements.forEach(function(mov, i) {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements
+
+  movs.forEach(function(mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal'
     const html = `
       <div class="movements__row">
@@ -217,6 +219,13 @@ btnClose.addEventListener('click', function(e) {
   inputClosePin.blur();
 })
 
+let sorted = false
+btnSort.addEventListener('click', function(e) {
+  e.preventDefault()
+  displayMovements(currentAccount.movements, !sorted)
+  sorted = !sorted
+})
+
 
 
 const eurToUsd = 1.1
@@ -319,18 +328,51 @@ const anyDeposits = movements.some(mov => mov > 0)
 
 
 // Methods CHAINING
-const overallBalance = accounts
-  .map((acc) => acc.movements)
-  .flat()
-  .reduce((acc, mov) => acc + mov, 0)
+// const overallBalance = accounts
+//   .map((acc) => acc.movements)
+//   .flat()
+//   .reduce((acc, mov) => acc + mov, 0)
 
-  console.log(overallBalance);
+// console.log(overallBalance);
 
 // FLATMAP
-const overallBalance2 = accounts
-  .flatMap((acc) => acc.movements)
-  .reduce((acc, mov) => acc + mov, 0);
+// const overallBalance2 = accounts
+//   .flatMap((acc) => acc.movements)
+//   .reduce((acc, mov) => acc + mov, 0);
 
-console.log(overallBalance2);
+// console.log(overallBalance2);  
 
+// SORT Method // WILL MUTATE
+// const owners = ['Jonas', 'Zack', 'Adam', 'Martha']
+// console.log(owners.sort())
+
+// console.log(movements);
+// 
+// return < 0, A, B (keep order)
+// return > 0, B, A (switch order)
+// movements.sort((a, b) => {
+//   if (a > b) return 1 
+//   if (b > a) return -1; 
+// })
+
+// movements.sort((a, b) => a - b)
+
+// console.log(movements);
+
+// ARRAY FROM method
+
+labelBalance.addEventListener('click', function(e) {
+  e.preventDefault()
+  // const movementsUI = Array.from(
+  //   document.querySelectorAll('.movements__value'),
+  //   el => Number(el.textContent.replace('€', ''))
+  // )
+
+  // const movementsUI = document.querySelectorAll('.movements__value') is NOT possible AHHHAAA!!!
+  const movementsUI = Array.from(document.querySelectorAll('.movements__value'))
+  console.log(movementsUI.map((el) => el.textContent.replace("€", "")));
+
+  // const movementsUI2 = [...document.querySelectorAll(".movements__value")];
+  // console.log(movementsUI2); 
+})
 
