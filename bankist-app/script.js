@@ -242,9 +242,9 @@ const movementsDescription = movements.map((mov, i, arr) => {
 
 // console.log(movementsDescription);
 
-const deposits = movements.filter(mov => mov > 0)
+// const deposits = movements.filter(mov => mov > 0)
 
-const withdrawals = movements.filter((mov) => mov < 0);
+// const withdrawals = movements.filter((mov) => mov < 0);
 
 // REDUCE METHOD
 
@@ -375,4 +375,35 @@ labelBalance.addEventListener('click', function(e) {
   // const movementsUI2 = [...document.querySelectorAll(".movements__value")];
   // console.log(movementsUI2); 
 })
+
+
+const bankDepositSum = accounts.map(acc => acc.movements).flat().filter(mov => mov > 0).reduce((sum, mov) => sum + mov, 0)
+// const numDeposits1000 = accounts.flatMap(acc => acc.movements).filter(mov => mov >= 1000).length
+const numDeposits1000 = accounts.flatMap(acc => acc.movements).reduce((count, mov) => (mov >= 1000 ? count + 1 : count), 0)
+
+const { deposits, withdrawals } = accounts
+  .flatMap((acc) => acc.movements)
+  .reduce(
+    (sums, mov) => {
+      // mov > 0 ? (sums.deposits += mov) : (sums.withdrawals += mov);
+      sums[mov > 0 ? "deposits" : "withdrawals"] += mov
+      return sums;
+    },
+    { deposits: 0, withdrawals: 0 }
+  );
+// console.log(deposits, withdrawals);
+
+const convertTitleCase = function(title) {
+  const capitalize = str => str[0].toUpperCase() + str.slice(1)
+  const expections = ['a', 'an', 'the', 'but', 'or', 'in']
+
+  const titleCase = title
+    .toLowerCase()
+    .split(" ")
+    .map((word) => (expections.includes(word) ? word : capitalize(word)))
+    .join(" ");
+  return capitalize(titleCase)
+}
+console.log(convertTitleCase('This is a nice title'));
+
 
