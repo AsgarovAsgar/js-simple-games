@@ -361,49 +361,91 @@ const anyDeposits = movements.some(mov => mov > 0)
 
 // ARRAY FROM method
 
-labelBalance.addEventListener('click', function(e) {
-  e.preventDefault()
-  // const movementsUI = Array.from(
-  //   document.querySelectorAll('.movements__value'),
-  //   el => Number(el.textContent.replace('€', ''))
-  // )
+// labelBalance.addEventListener('click', function(e) {
+//   e.preventDefault()
+//   // const movementsUI = Array.from(
+//   //   document.querySelectorAll('.movements__value'),
+//   //   el => Number(el.textContent.replace('€', ''))
+//   // )
 
-  // const movementsUI = document.querySelectorAll('.movements__value') is NOT possible AHHHAAA!!!
-  const movementsUI = Array.from(document.querySelectorAll('.movements__value'))
-  console.log(movementsUI.map((el) => el.textContent.replace("€", "")));
+//   // const movementsUI = document.querySelectorAll('.movements__value') is NOT possible AHHHAAA!!!
+//   const movementsUI = Array.from(document.querySelectorAll('.movements__value'))
+//   console.log(movementsUI.map((el) => el.textContent.replace("€", "")));
 
-  // const movementsUI2 = [...document.querySelectorAll(".movements__value")];
-  // console.log(movementsUI2); 
-})
+//   // const movementsUI2 = [...document.querySelectorAll(".movements__value")];
+//   // console.log(movementsUI2); 
+// })
 
 
-const bankDepositSum = accounts.map(acc => acc.movements).flat().filter(mov => mov > 0).reduce((sum, mov) => sum + mov, 0)
+// const bankDepositSum = accounts.map(acc => acc.movements).flat().filter(mov => mov > 0).reduce((sum, mov) => sum + mov, 0)
 // const numDeposits1000 = accounts.flatMap(acc => acc.movements).filter(mov => mov >= 1000).length
-const numDeposits1000 = accounts.flatMap(acc => acc.movements).reduce((count, mov) => (mov >= 1000 ? count + 1 : count), 0)
+// const numDeposits1000 = accounts.flatMap(acc => acc.movements).reduce((count, mov) => (mov >= 1000 ? count + 1 : count), 0)
 
-const { deposits, withdrawals } = accounts
-  .flatMap((acc) => acc.movements)
-  .reduce(
-    (sums, mov) => {
-      // mov > 0 ? (sums.deposits += mov) : (sums.withdrawals += mov);
-      sums[mov > 0 ? "deposits" : "withdrawals"] += mov
-      return sums;
-    },
-    { deposits: 0, withdrawals: 0 }
-  );
+// const { deposits, withdrawals } = accounts
+//   .flatMap((acc) => acc.movements)
+//   .reduce(
+//     (sums, mov) => {
+//       // mov > 0 ? (sums.deposits += mov) : (sums.withdrawals += mov);
+//       sums[mov > 0 ? "deposits" : "withdrawals"] += mov
+//       return sums;
+//     },
+//     { deposits: 0, withdrawals: 0 }
+//   );
 // console.log(deposits, withdrawals);
 
-const convertTitleCase = function(title) {
-  const capitalize = str => str[0].toUpperCase() + str.slice(1)
-  const expections = ['a', 'an', 'the', 'but', 'or', 'in']
+// const convertTitleCase = function(title) {
+//   const capitalize = str => str[0].toUpperCase() + str.slice(1)
+//   const expections = ['a', 'an', 'the', 'but', 'or', 'in']
 
-  const titleCase = title
-    .toLowerCase()
-    .split(" ")
-    .map((word) => (expections.includes(word) ? word : capitalize(word)))
-    .join(" ");
-  return capitalize(titleCase)
-}
-console.log(convertTitleCase('This is a nice title'));
+//   const titleCase = title
+//     .toLowerCase()
+//     .split(" ")
+//     .map((word) => (expections.includes(word) ? word : capitalize(word)))
+//     .join(" ");
+//   return capitalize(titleCase)
+// }
+// console.log(convertTitleCase('This is a nice title'));
 
+const dogs = [
+  { weight: 22, curFood: 250, owners: ["Alice", "Bob"] },
+  { weight: 8, curFood: 200, owners: ["Matilda"] },
+  { weight: 13, curFood: 275, owners: ["Sarah", "John"] },
+  { weight: 32, curFood: 340, owners: ["Michael"] },
+];
+
+//1.
+dogs.forEach(dog => dog.recFood = Math.trunc(dog.weight ** 0.75 * 28))
+console.log(dogs);
+
+//2.
+
+const dogSarah = dogs.find(dog => dog.owners.includes('Sarah'))
+console.log(dogSarah);
+const message = dogSarah.curFood > dogSarah.recFood ? "Sarah's dog eats too much" : 'Not eat too much'
+console.log(message);
+
+// 3.
+const ownersEatTooMuch = dogs.filter(dog => dog.curFood > dog.recFood).flatMap(dog => dog.owners)
+const ownersEatTooLittle = dogs
+  .filter((dog) => dog.curFood < dog.recFood)
+  .flatMap((dog) => dog.owners);
+
+// 4.
+console.log(`${ownersEatTooMuch.join(' and ')}'s dogs eat too much`);
+console.log(`${ownersEatTooLittle.join(" and ")}'s dogs eat too little`);
+
+// 5.
+console.log(dogs.some(dog => dog.recFood === dog.curFood))
+
+// 6.
+
+const checkEatingOkay = (dog) => dog.curFood > dog.recFood * 0.9 && dog.curFood < dog.recFood * 1.1
+console.log(dogs.some(checkEatingOkay));
+
+// 7.
+console.log(dogs.filter(checkEatingOkay));
+
+// 8.
+const dogsCopy = dogs.slice().sort((a,b) => a.recFood - b.recFood)
+console.log(dogsCopy);
 
