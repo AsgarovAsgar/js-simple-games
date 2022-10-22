@@ -20,10 +20,10 @@ const account1 = {
     '2019-12-23T07:42:02.383Z',
     '2020-01-28T09:15:04.904Z',
     '2020-04-01T10:17:24.185Z',
-    '2020-05-08T14:11:59.604Z',
-    '2020-05-27T17:01:17.194Z',
+    '2020-07-08T14:11:59.604Z',
+    '2020-07-12T17:01:17.194Z',
     '2020-07-11T23:36:17.929Z',
-    '2020-07-12T10:51:36.790Z',
+    '2020-07-11T10:51:36.790Z',
   ],
   currency: 'EUR',
   locale: 'pt-PT', // de-DE
@@ -81,6 +81,26 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // Functions
 
+const formatMovementDate = function(date) {
+    const calcDaysPassed = (date1, date2) =>
+      Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
+
+
+    const daysPassed = calcDaysPassed(new Date(2020, 6, 12), date);
+
+    console.log('Atas bax bura', daysPassed);
+
+    if (daysPassed === 0) return `Today`
+    if (daysPassed === 1) return `Yesterday`
+    if (daysPassed <= 7) return `${daysPassed} days ago`
+    else {
+      const year = date.getFullYear();
+      const month = `${date.getMonth() + 1}`.padStart(2, 0);
+      const day = `${date.getDate()}`.padStart(2, 0);
+      return `${day}/${month}/${year}`;
+    }
+}
+
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = '';
 
@@ -89,13 +109,8 @@ const displayMovements = function (acc, sort = false) {
   movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
-    let date = new Date(acc.movementsDates[i]);
-
-    console.log(date);
-    const year = date.getFullYear();
-    const month = `${date.getMonth() + 1}`.padStart(2, 0)
-    const day = `${date.getDate()}`.padStart(2, 0)
-    const displayDate = `${day}/${month}/${year}`
+    const date = new Date(acc.movementsDates[i]);
+    const displayDate = formatMovementDate(date);
 
     const html = `
       <div class="movements__row">
@@ -177,7 +192,7 @@ btnLogin.addEventListener('click', function (e) {
   currentAccount = accounts.find(
     acc => acc.username === inputLoginUsername.value
   );
-  console.log(currentAccount);
+  // console.log(currentAccount);
 
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     // Display UI and message
@@ -304,3 +319,10 @@ const randomInt = (min, max) => Math.trunc(Math.random() * (max - min) + 1) + mi
 // console.log(priceCent);
 
 const future = new Date(2037, 10, 19, 15, 23)
+// console.log(+future);
+
+const calcDaysPassed = (date1, date2) => Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24))
+
+
+
+// console.log(calcDaysPassed(new Date(1999, 7, 10), new Date(1999, 7, 5)));
