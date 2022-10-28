@@ -183,14 +183,39 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+
+const startLogOutTimer = function() {
+
+  const tick = function() {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+    labelTimer.textContent = `${min}:${sec}`;
+
+    if (time == 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = `Login to get started`;
+      containerApp.style.opacity = 0;
+    }
+
+    // decrease time 1s
+    time--;
+  }
+  // let time = 10
+  let time = 60 * 5;
+
+  const timer = setInterval(tick, 1000)
+
+  return timer
+}
+
 ///////////////////////////////////////
 // Event handlers
-let currentAccount;
+let currentAccount, timer;
 
 // FAKE ALWAYS LOGGED IN
-currentAccount = account1
-updateUI(currentAccount)
-containerApp.style.opacity = 100
+// currentAccount = account1
+// updateUI(currentAccount)
+// containerApp.style.opacity = 100
 
 // I18N API 
 const now = new Date()
@@ -241,6 +266,11 @@ btnLogin.addEventListener('click', function (e) {
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
+
+    if(timer) {
+      clearInterval(timer)
+    }
+    timer = startLogOutTimer()
     // Update UI
     updateUI(currentAccount);
   }
@@ -269,6 +299,10 @@ btnTransfer.addEventListener('click', function (e) {
 
     // Update UI
     updateUI(currentAccount);
+
+    // reset timer
+    clearInterval(timer)
+    timer = startLogOutTimer()
   }
 });
 
@@ -282,11 +316,14 @@ btnLoan.addEventListener('click', function (e) {
     currentAccount.movements.push(amount);
     currentAccount.movementsDates.push(new Date().toISOString());
 
-
     // Update UI
     updateUI(currentAccount);
   }
   inputLoanAmount.value = '';
+
+  // reset timer
+  clearInterval(timer);
+  timer = startLogOutTimer();
 });
 
 btnClose.addEventListener('click', function (e) {
