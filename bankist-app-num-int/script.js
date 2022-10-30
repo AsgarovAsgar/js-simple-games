@@ -390,3 +390,5 @@ const calcDaysPassed = (date1, date2) => Math.round(Math.abs(date2 - date1) / (1
 
 // console.log(calcDaysPassed(new Date(1999, 7, 10), new Date(1999, 7, 5)));
 // work on konsept
+
+// work on konsept 30
