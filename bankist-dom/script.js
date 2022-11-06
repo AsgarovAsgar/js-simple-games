@@ -132,3 +132,4 @@ document.querySelector('.nav').addEventListener('click', function (e) {
 
 // when we set it to TRUE, capturing happens.
 // Instead of showing link first, it will show nav first in the console
+// theoretical part
