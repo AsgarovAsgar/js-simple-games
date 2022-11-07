@@ -1,12 +1,15 @@
 'use strict';
 
-///////////////////////////////////////
-// Modal window
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
 
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+
+///////////////////////////////////////
+// Modal window
 
 const openModal = function () {
   modal.classList.remove('hidden');
@@ -29,6 +32,51 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+
+
+// button scrolling
+btnScrollTo.addEventListener('click', function (e) {
+  const s1Coords = section1.getBoundingClientRect(e);
+  console.log(s1Coords);
+
+  // scroll
+  // window.scrollTo(s1Coords.left + window.pageXOffset, s1Coords.top + window.pageYOffset)
+
+  // smooth scroll
+  window.scrollTo({
+    left: s1Coords.left + window.pageXOffset,
+    top: s1Coords.top + window.pageYOffset,
+    behavior: 'smooth',
+  });
+
+  // modern way
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+///////////////////////////////////
+// PAGE NAVIGATION
+
+// document.querySelectorAll('.nav__link').forEach(function(el) {
+//   el.addEventListener('click', function(e) {
+//     e.preventDefault()
+//     const id = this.getAttribute('href')
+//     console.log('link', id);
+//     document.querySelector(id).scrollIntoView({behavior: 'smooth'})
+//   })
+// })
+
+// 1. Add event listener to the parent element
+// 2. Determine which element originate that event
+
+document.querySelector('.nav__links').addEventListener('click', function(e) {
+  e.preventDefault();
+
+  // matching strategy
+  if(e.target.classList.contains('nav__link')) {
+    const id = e.target.getAttribute('href')
+    document.querySelector(id).scrollIntoView({behavior: 'smooth'})
+  }
+})
 
 // console.log(document.documentElement);
 // console.log(document.head);
@@ -63,28 +111,7 @@ message.innerHTML = `We use cookies for better functionality and analytics. <but
 const logo = document.querySelector('.nav__logo')
 // console.log(logo.alt);
 // console.log(logo.src);
-// console.log(logo.className);
 
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
-
-btnScrollTo.addEventListener('click', function(e) {
-  const s1Coords = section1.getBoundingClientRect(e)
-  console.log(s1Coords);
-
-  // scroll
-  // window.scrollTo(s1Coords.left + window.pageXOffset, s1Coords.top + window.pageYOffset)
-
-  // smooth scroll
-  window.scrollTo({
-    left: s1Coords.left + window.pageXOffset,
-    top: s1Coords.top + window.pageYOffset,
-    behavior: 'smooth'
-  });
-
-  // modern way
-  section1.scrollIntoView({ behavior: 'smooth' })
-})
 
 const h1 = document.querySelector('h1')
 const logH1 = function (e) {
@@ -111,25 +138,26 @@ const randomColor = () => {
 }
 
   // console.log(randomColor());
-document.querySelector('.nav__link').addEventListener('click', function(e) {
-  this.style.backgroundColor = randomColor()
-  console.log('link', e.target, e.currentTarget);
-  console.log(this === e.currentTarget);
+// document.querySelector('.nav__link').addEventListener('click', function(e) {
+//   this.style.backgroundColor = randomColor()
+//   // console.log('link', e.target, e.currentTarget);
+//   // console.log(this === e.currentTarget);
 
-  //stop propagation => not really good idea to implement to simple event handlings
-  // e.stopPropagation()
-})
+//   //stop propagation => not really good idea to implement to simple event handlings
+//   // e.stopPropagation()
+// })
 
-document.querySelector('.nav__links').addEventListener('click', function(e) {
-  this.style.backgroundColor = randomColor();
-  console.log('nav-links', e.target, e.currentTarget);
-});
+// document.querySelector('.nav__links').addEventListener('click', function(e) {
+//   this.style.backgroundColor = randomColor();
+//   // console.log('nav-links', e.target, e.currentTarget);
+// });
 
-document.querySelector('.nav').addEventListener('click', function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log('nav', e.target, e.currentTarget);
-});
+// document.querySelector('.nav').addEventListener('click', function (e) {
+//   this.style.backgroundColor = randomColor();
+//   // console.log('nav', e.target, e.currentTarget);
+// });
 
 // when we set it to TRUE, capturing happens.
 // Instead of showing link first, it will show nav first in the console
 // theoretical part
+
