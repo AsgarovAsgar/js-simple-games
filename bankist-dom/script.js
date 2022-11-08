@@ -113,16 +113,16 @@ const logo = document.querySelector('.nav__logo')
 // console.log(logo.src);
 
 
-const h1 = document.querySelector('h1')
-const logH1 = function (e) {
-  console.log('hover hover hover');
-};
+// const h1 = document.querySelector('h1')
+// const logH1 = function (e) {
+//   console.log('hover hover hover');
+// };
 
-h1.addEventListener('mouseenter', logH1);
+// h1.addEventListener('mouseenter', logH1);
 
-setTimeout(() => {
-  h1.removeEventListener('mouseenter', logH1);
-}, 5000)
+// setTimeout(() => {
+//   h1.removeEventListener('mouseenter', logH1);
+// }, 5000)
 
 // h1.onmouseenter = function(e) {
 //   console.log('lololo', e);
@@ -161,3 +161,27 @@ const randomColor = () => {
 // Instead of showing link first, it will show nav first in the console
 // theoretical part
 
+
+///////////////////////
+// DOM TRAVERSING
+const h1 = document.querySelector('h1')
+
+// going downwards: children
+console.log(h1.querySelectorAll('.highlight'));
+
+console.log(h1.childNodes); //select everything inside of query
+console.log(h1.children); //select only html elements
+h1.firstElementChild.style.color = 'white';
+h1.lastElementChild.style.color = 'orangered'
+
+// going upwards: parents
+console.log(h1.parentNode);
+console.log(h1.parentElement);
+
+// !!! important !!!
+h1.closest('.header').style.background = 'var(--gradient-secondary)'
+h1.closest('h1').style.background = 'var(--gradient-primary)';
+
+// going sideways: siblings
+console.log(h1.previousElementSibling);
+console.log(h1.nextElementSibling);
